@@ -101,7 +101,7 @@ open class ChartDataSet: ChartBaseDataSet
 
         guard !isEmpty else { return }
         
-        let indexFrom = entryIndex(x: fromX, closestToY: .nan, rounding: .down)
+        let indexFrom = entryIndex(x: fromX, closestToY: .nan, rounding: .closest)
         var indexTo = entryIndex(x: toX, closestToY: .nan, rounding: .up)
         if indexTo == -1 { indexTo = entryIndex(x: toX, closestToY: .nan, rounding: .closest) }
         
