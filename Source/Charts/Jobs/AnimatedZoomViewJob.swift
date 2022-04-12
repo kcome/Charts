@@ -64,7 +64,7 @@ open class AnimatedZoomViewJob: AnimatedViewPortJob
     {
         let scaleX = xOrigin + (self.scaleX - xOrigin) * phase
         let scaleY = yOrigin + (self.scaleY - yOrigin) * phase
-        
+        guard let viewPortHandler = viewPortHandler, let view = view else { return }
         var matrix = viewPortHandler.setZoom(scaleX: scaleX, scaleY: scaleY)
         viewPortHandler.refresh(newMatrix: matrix, chart: view, invalidate: false)
         
@@ -76,7 +76,7 @@ open class AnimatedZoomViewJob: AnimatedViewPortJob
             y: zoomOriginY + ((zoomCenterY + valsInView / 2.0) - zoomOriginY) * phase
         )
         
-        transformer.pointValueToPixel(&pt)
+        transformer?.pointValueToPixel(&pt)
         
         matrix = viewPortHandler.translate(pt: pt)
         viewPortHandler.refresh(newMatrix: matrix, chart: view, invalidate: true)
@@ -84,6 +84,7 @@ open class AnimatedZoomViewJob: AnimatedViewPortJob
     
     internal override func animationEnd()
     {
+        guard let view = view else { return }
         (view as? BarLineChartViewBase)?.calculateOffsets()
         view.setNeedsDisplay()
     }

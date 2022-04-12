@@ -16,12 +16,13 @@ open class AnimatedMoveViewJob: AnimatedViewPortJob
 {
     internal override func animationUpdate()
     {
+        guard let viewPortHandler = viewPortHandler, let view = view else { return }
         var pt = CGPoint(
             x: xOrigin + (CGFloat(xValue) - xOrigin) * phase,
             y: yOrigin + (CGFloat(yValue) - yOrigin) * phase
         )
         
-        transformer.pointValueToPixel(&pt)
+        transformer?.pointValueToPixel(&pt)
         viewPortHandler.centerViewPort(pt: pt, chart: view)
     }
 }
