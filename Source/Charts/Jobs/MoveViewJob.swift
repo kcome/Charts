@@ -17,12 +17,13 @@ open class MoveViewJob: ViewPortJob
 {
     open override func doJob()
     {
+        guard let viewPortHandler = viewPortHandler, let view = view else { return }
         var pt = CGPoint(
             x: xValue,
             y: yValue
         )
         
-        transformer.pointValueToPixel(&pt)
+        transformer?.pointValueToPixel(&pt)
         viewPortHandler.centerViewPort(pt: pt, chart: view)
     }
 }

@@ -44,6 +44,7 @@ open class ZoomViewJob: ViewPortJob
     
     open override func doJob()
     {
+        guard let viewPortHandler = viewPortHandler, let view = view else { return }
         var matrix = viewPortHandler.setZoom(scaleX: scaleX, scaleY: scaleY)
         viewPortHandler.refresh(newMatrix: matrix, chart: view, invalidate: false)
         
@@ -55,7 +56,7 @@ open class ZoomViewJob: ViewPortJob
             y: CGFloat(yValue + yValsInView / 2.0)
         )
         
-        transformer.pointValueToPixel(&pt)
+        transformer?.pointValueToPixel(&pt)
         
         matrix = viewPortHandler.translate(pt: pt)
         viewPortHandler.refresh(newMatrix: matrix, chart: view, invalidate: false)
